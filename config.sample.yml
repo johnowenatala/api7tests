@@ -1,0 +1,70 @@
+# grupo a usar
+# se puede sobreescribir con la variable de entorno GROUP:
+# $> GROUP=105 bundle exec rspec
+group: 2
+
+
+# nivel de log (:unknown - :debug - :info - :warn - :error - :fatal)
+# a priori, uso de cada nivel:
+# - :debug (muy verboso, info de cada paso)
+# - :info (informacion inicial y comentarios minimalistas, pero importantes)
+# - :warn (alertas, por ejemplo de tests omitidos o "libertades" adicionales)
+# - :error (errores que normalmente haran fallar el test).
+# Nivel recomendado: :info
+# se puede sobreescribir con la variable de entorno LOG_LEVEL:
+# $> LOG_LEVEL=info GROUP=7 bundle exec rspec
+log_level: :info
+
+
+
+
+# listado de grupos configurados
+groups:
+# DESCRIPCION:
+# cada grupo requiere los siguientes parametros:
+# group: numero de grupo. Sirve para usar estos datos de configuracion
+# products_url: direccion de la URL que lista los productos
+# user: nombre de usuario para la autenticacion
+# pass: contrasenia para la autenticacion
+#
+# Ademas, se soportan los parametros:
+# products_list_mapper: (false por default).
+#     Nombre de un "mapper" para transformar la lista de productos.
+#     - false - no usar mapper (la lista debe ser un arreglo de strings)
+#     - true - usar un mapper simple, que asume que la lista es un arreglo de objetos
+#              pero que poseen solo un elemento: el id - esto es valido segun cierta
+#              interpretacion del enunciado, por lo que no debiera descontar
+#     - un string: nombre del mapper. Ver products_list_mapper para la lista de mappers
+#              conocidos, o agregar ahi alguno de ser necesario. Notese que un mapper
+#              no es mas que un lambda que recibe la lista devuelta por el servicio y
+#              entrega la lista "arreglada" (como un arreglo de strings). Este tipo
+#              de mappers descuenta en el test 1, pero es necesario para poder correr
+#              los demas tests
+# expiration_header_names: ['Last-Modified', 'ETag'] por default.
+#     Lista de headers que se ocuparan para identificar la fecha de actualizacion de
+#     un producto. Notese que la logica que se ocupara es "ha cambiado esta fecha?",
+#     para saber si cambio o no el producto desde la ultima vez que fue pedido.
+#     Esto significa que headers como 'Expires' no aplican.
+#
+#
+# Ademas, es posible cualquier otro parametro como informacion util, como los
+# estudiantes, el repo, etc. Cualquier otro parametro es ignorado, asi que no importa.
+
+# ejemplos:
+
+- group: 1
+  repo: https://bitbucket.org/some-repo
+  student1: Pancho Villa
+  student2: Perro Malo
+  products_url: http://some-app.herokuapp.com/api/v1/products
+  user: the_api_user
+  pass: my_password
+
+- group: 2
+  repo: https://github.com/user/ble
+  student1: Chloe Grace
+  student2:
+  products_url: https://awesome-app-1.herokuapp.com/api/v1/products
+  products_list_mapper: 'id'
+  user: homer@simpsons.com
+  pass: pull a Homer
