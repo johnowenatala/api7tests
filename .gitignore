@@ -2,3 +2,5 @@
 .idea
 # archivo de configuracion real
 config.yml
+# cosas de mac
+.DS_Store
