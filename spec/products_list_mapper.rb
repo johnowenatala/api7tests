@@ -12,6 +12,12 @@ module ProductsListMapper
     end,
     'id' => lambda do |source_list|
       source_list.map{|p| p[:id]}
+    end,
+    'ignore_null' => lambda do |source_list|
+      source_list.reject{|r| r.nil? }
+    end,
+    'custom1' => lambda do |source_list|
+      source_list[:products].map{|p| p[:fully_url]}
     end
   }
 

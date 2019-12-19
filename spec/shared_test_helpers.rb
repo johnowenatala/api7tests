@@ -86,6 +86,12 @@ module SharedTestHelpers
   end
 
   def expect_success
+    # s_20 = (200..204).to_a
+    # if response.code.is_a? String
+    #   s_20 = s_20.map(&:to_s)
+    # end
+    #
+    # expect(response.code).to eq(s_20[0]).or eq(s_20[1]).or eq(s_20[2]).or eq(s_20[3]).or eq(s_20[4])
     if body.nil? || body.empty?
       expect_status 204 # no content
     else
